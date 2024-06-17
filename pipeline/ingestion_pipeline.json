@@ -1,0 +1,527 @@
+{
+	"name": "ingestion_pipeline",
+	"properties": {
+		"description": "Ingesting raw data into ADLS gen2 from github",
+		"activities": [
+			{
+				"name": "Copy Activity",
+				"description": "ingesting data into ADLS2 as raw",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Patient_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Patient_ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Age",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Age",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Gender",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Gender",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Smoking_History",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Smoking_History",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Tumor_Size_mm",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Tumor_Size_mm",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Tumor_Location",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Tumor_Location",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Stage",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Stage",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Treatment",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Treatment",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Survival_Months",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Survival_Months",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Ethnicity",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Ethnicity",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Insurance_Type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Insurance_Type",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Family_History",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Family_History",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Comorbidity_Diabetes",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Comorbidity_Diabetes",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Comorbidity_Hypertension",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Comorbidity_Hypertension",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Comorbidity_Heart_Disease",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Comorbidity_Heart_Disease",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Comorbidity_Chronic_Lung_Disease",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Comorbidity_Chronic_Lung_Disease",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Comorbidity_Kidney_Disease",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Comorbidity_Kidney_Disease",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Comorbidity_Autoimmune_Disease",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Comorbidity_Autoimmune_Disease",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Comorbidity_Other",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Comorbidity_Other",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Performance_Status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Performance_Status",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Blood_Pressure_Systolic",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Blood_Pressure_Systolic",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Blood_Pressure_Diastolic",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Blood_Pressure_Diastolic",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Blood_Pressure_Pulse",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Blood_Pressure_Pulse",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Hemoglobin_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Hemoglobin_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "White_Blood_Cell_Count",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "White_Blood_Cell_Count",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Platelet_Count",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Platelet_Count",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Albumin_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Albumin_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Alkaline_Phosphatase_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Alkaline_Phosphatase_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Alanine_Aminotransferase_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Alanine_Aminotransferase_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Aspartate_Aminotransferase_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Aspartate_Aminotransferase_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Creatinine_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Creatinine_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "LDH_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LDH_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Calcium_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Calcium_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Phosphorus_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Phosphorus_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Glucose_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Glucose_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Potassium_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Potassium_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Sodium_Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Sodium_Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Smoking_Pack_Years",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Smoking_Pack_Years",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "lung_cancer_data",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "lung_cancer_dataset",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2024-06-17T23:46:23Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
