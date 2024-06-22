@@ -1,0 +1,25 @@
+{
+	"name": "Ingestion_prePared_data",
+	"properties": {
+		"description": "Ingesting transformed data in data warehouse",
+		"activities": [
+			{
+				"name": "ToDatawarehouse",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			}
+		],
+		"annotations": []
+	}
+}
