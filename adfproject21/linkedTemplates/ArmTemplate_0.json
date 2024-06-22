@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
+		"SynapseLinkedServices_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SynapseLinkedServices'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsgen2project.dfs.core.windows.net/"
@@ -22,6 +26,18 @@
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com/ansil21/lung-cancer-dataset/main/lung_cancer_data.csv"
+		},
+		"SynapseLinkedServices_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "synapse-workspace21.sql.azuresynapse.net"
+		},
+		"SynapseLinkedServices_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "datawarehouse21"
+		},
+		"SynapseLinkedServices_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "ansil21"
 		}
 	},
 	"variables": {
@@ -69,6 +85,28 @@
 					"url": "[parameters('HttpServer1_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
 					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SynapseLinkedServices')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"server": "[parameters('SynapseLinkedServices_properties_typeProperties_server')]",
+					"database": "[parameters('SynapseLinkedServices_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('SynapseLinkedServices_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SynapseLinkedServices_password')]"
+					}
 				}
 			},
 			"dependsOn": []
@@ -126,6 +164,269 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "processed/lung_cancer_dataset",
+						"fileSystem": "project"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "Gender",
+						"type": "UTF8"
+					},
+					{
+						"name": "Survival_Months",
+						"type": "INT32"
+					},
+					{
+						"name": "Smoking_History",
+						"type": "UTF8"
+					},
+					{
+						"name": "Tumor_Size_mm",
+						"type": "DOUBLE"
+					},
+					{
+						"name": "Stage",
+						"type": "UTF8"
+					},
+					{
+						"name": "Ethnicity",
+						"type": "UTF8"
+					},
+					{
+						"name": "Treatment",
+						"type": "UTF8"
+					},
+					{
+						"name": "Insurance_Type",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SynapseLinkedServices",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlDWTable",
+				"schema": [
+					{
+						"name": "Gender",
+						"type": "varchar"
+					},
+					{
+						"name": "Survival_Months",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Smoking_History",
+						"type": "varchar"
+					},
+					{
+						"name": "Tumor_Size_mm",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Stage",
+						"type": "varchar"
+					},
+					{
+						"name": "Ethnicity",
+						"type": "varchar"
+					},
+					{
+						"name": "Treatment",
+						"type": "varchar"
+					},
+					{
+						"name": "Insurance_Type",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "healthcare",
+					"table": "lungcancerdataset"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SynapseLinkedServices')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ingestion_prePared_data')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Ingesting transformed data in data warehouse",
+				"activities": [
+					{
+						"name": "ToDatawarehouse",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ParquetSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "ParquetReadSettings"
+								}
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"allowCopyCommand": true,
+								"copyCommandSettings": {}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Gender",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Gender",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Survival_Months",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "Survival_Months",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"name": "Smoking_History",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Smoking_History",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Tumor_Size_mm",
+											"type": "Double"
+										},
+										"sink": {
+											"name": "Tumor_Size_mm",
+											"type": "Double"
+										}
+									},
+									{
+										"source": {
+											"name": "Stage",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Stage",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Ethnicity",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Ethnicity",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Treatment",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Treatment",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "Insurance_Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Insurance_Type",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Parquet1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSynapseAnalyticsTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable1')]"
 			]
 		},
 		{

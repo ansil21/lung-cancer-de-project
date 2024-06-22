@@ -11,11 +11,23 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
+		"SynapseLinkedServices_password": {
+			"value": ""
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://adlsgen2project.dfs.core.windows.net/"
 		},
 		"HttpServer1_properties_typeProperties_url": {
 			"value": "https://raw.githubusercontent.com/ansil21/lung-cancer-dataset/main/lung_cancer_data.csv"
+		},
+		"SynapseLinkedServices_properties_typeProperties_server": {
+			"value": "synapse-workspace21.sql.azuresynapse.net"
+		},
+		"SynapseLinkedServices_properties_typeProperties_database": {
+			"value": "datawarehouse21"
+		},
+		"SynapseLinkedServices_properties_typeProperties_userName": {
+			"value": "ansil21"
 		},
 		"containerUri": {
 			"value": ""

@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
+		"SynapseLinkedServices_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SynapseLinkedServices'"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsgen2project.dfs.core.windows.net/"
@@ -22,6 +26,18 @@
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com/ansil21/lung-cancer-dataset/main/lung_cancer_data.csv"
+		},
+		"SynapseLinkedServices_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "synapse-workspace21.sql.azuresynapse.net"
+		},
+		"SynapseLinkedServices_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "datawarehouse21"
+		},
+		"SynapseLinkedServices_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "ansil21"
 		},
 		"containerUri": {
 			"type": "string",
@@ -56,11 +72,23 @@
 					"AzureDataLakeStorage1_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
 					},
+					"SynapseLinkedServices_password": {
+						"value": "[parameters('SynapseLinkedServices_password')]"
+					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
 					"HttpServer1_properties_typeProperties_url": {
 						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
+					},
+					"SynapseLinkedServices_properties_typeProperties_server": {
+						"value": "[parameters('SynapseLinkedServices_properties_typeProperties_server')]"
+					},
+					"SynapseLinkedServices_properties_typeProperties_database": {
+						"value": "[parameters('SynapseLinkedServices_properties_typeProperties_database')]"
+					},
+					"SynapseLinkedServices_properties_typeProperties_userName": {
+						"value": "[parameters('SynapseLinkedServices_properties_typeProperties_userName')]"
 					}
 				}
 			},
