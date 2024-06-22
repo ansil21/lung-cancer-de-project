@@ -1,0 +1,53 @@
+{
+	"name": "Parquet1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "processed/lung_cancer_dataset",
+				"fileSystem": "project"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Gender",
+				"type": "UTF8"
+			},
+			{
+				"name": "Survival_Months",
+				"type": "INT32"
+			},
+			{
+				"name": "Smoking_History",
+				"type": "UTF8"
+			},
+			{
+				"name": "Tumor_Size_mm",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Stage",
+				"type": "UTF8"
+			},
+			{
+				"name": "Ethnicity",
+				"type": "UTF8"
+			},
+			{
+				"name": "Treatment",
+				"type": "UTF8"
+			},
+			{
+				"name": "Insurance_Type",
+				"type": "UTF8"
+			}
+		]
+	}
+}

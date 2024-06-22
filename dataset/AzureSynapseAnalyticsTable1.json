@@ -1,0 +1,51 @@
+{
+	"name": "AzureSynapseAnalyticsTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SynapseLinkedServices",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlDWTable",
+		"schema": [
+			{
+				"name": "Gender",
+				"type": "varchar"
+			},
+			{
+				"name": "Survival_Months",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Smoking_History",
+				"type": "varchar"
+			},
+			{
+				"name": "Tumor_Size_mm",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Stage",
+				"type": "varchar"
+			},
+			{
+				"name": "Ethnicity",
+				"type": "varchar"
+			},
+			{
+				"name": "Treatment",
+				"type": "varchar"
+			},
+			{
+				"name": "Insurance_Type",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "healthcare",
+			"table": "lungcancerdataset"
+		}
+	}
+}

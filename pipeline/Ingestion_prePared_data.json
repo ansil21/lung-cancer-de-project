@@ -16,8 +16,120 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"allowCopyCommand": true
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Gender",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Gender",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Survival_Months",
+									"type": "Int32"
+								},
+								"sink": {
+									"name": "Survival_Months",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"name": "Smoking_History",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Smoking_History",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Tumor_Size_mm",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "Tumor_Size_mm",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "Stage",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Stage",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Ethnicity",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Ethnicity",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Treatment",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Treatment",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Insurance_Type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Insurance_Type",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Parquet1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSynapseAnalyticsTable1",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
