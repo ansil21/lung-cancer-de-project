@@ -1076,7 +1076,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "part-00001-tid-3656878193354810286-30ab36f6-c60a-4900-be07-ca489e547581-51-1-c000.snappy.parquet",
+						"fileName": "part-00002-tid-3656878193354810286-30ab36f6-c60a-4900-be07-ca489e547581-52-1-c000.snappy.parquet",
 						"folderPath": "processed/lung_cancer_dataset",
 						"fileSystem": "project"
 					},
