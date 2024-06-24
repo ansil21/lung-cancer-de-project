@@ -1,5 +1,5 @@
 {
-	"name": "Ingestion_prePared_data",
+	"name": "lung_cancer_Ingestion_prePared_data",
 	"properties": {
 		"description": "Ingesting transformed data in data warehouse",
 		"activities": [

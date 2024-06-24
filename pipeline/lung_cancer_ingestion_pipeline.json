@@ -1,5 +1,5 @@
 {
-	"name": "ingestion_pipeline",
+	"name": "lung_cancer_ingestion_pipeline",
 	"properties": {
 		"description": "Ingesting raw data into ADLS gen2 from github",
 		"activities": [
